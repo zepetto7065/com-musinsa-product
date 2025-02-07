@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+//N+1 해결을 위한 fetch 조인 적용
 public interface ItemJpaRepository extends JpaRepository<Item, Long> {
     @Query("SELECT new com.musinsa.product.core.service.item.summary.MinItem(i.category.name, i.brand.name, i.price) " +
             "FROM Item i " +
@@ -16,5 +17,9 @@ public interface ItemJpaRepository extends JpaRepository<Item, Long> {
             "ORDER BY i.category.id ASC")
     List<MinItem> findMinPricedProductPerCategory();
 
+    @Query("select i from Item i join fetch i.brand where i.category = :category")
     List<Item> findAllByCategory(Category category);
+
+    @Query("select distinct i from Item i join fetch i.brand join fetch i.category")
+    List<Item> findAllWithBrandAndCategory();
 }

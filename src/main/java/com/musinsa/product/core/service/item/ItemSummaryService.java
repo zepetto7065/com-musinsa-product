@@ -61,6 +61,7 @@ public class ItemSummaryService {
                             (item1, item2) -> item1.getPrice().compareTo(item2.getPrice()) <= 0 ? item1 : item2
                     ));
 
+            //모든 카테고리를 보유했는지 check
             if(itemByCategory.size() == totalCategoryCount){
                 BigDecimal totalPrice = itemByCategory.values().stream()
                         .map(Item::getPrice)

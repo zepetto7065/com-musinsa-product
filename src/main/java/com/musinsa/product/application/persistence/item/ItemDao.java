@@ -21,7 +21,7 @@ public class ItemDao implements ItemRepository {
 
     @Override
     public List<Item> findAll() {
-        return itemJpaRepository.findAll();
+        return itemJpaRepository.findAllWithBrandAndCategory();
     }
 
     @Override
