@@ -1,4 +1,4 @@
-package com.musinsa.product.core.service;
+package com.musinsa.product.core.service.item;
 
 import lombok.*;
 
