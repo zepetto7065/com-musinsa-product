@@ -1,9 +1,6 @@
 package com.musinsa.product.application.api.item.payload;
 
-import com.musinsa.product.core.service.item.MinItem;
-import com.musinsa.product.core.service.item.MinItemSummary;
-import com.musinsa.product.core.service.item.SingleBrandMinItem;
-import com.musinsa.product.core.service.item.SingleBrandMinItemSummary;
+import com.musinsa.product.core.service.item.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -18,4 +15,8 @@ public interface ItemConverter {
     SingleBrandMinSummaryResponse mapTo(SingleBrandMinItemSummary summary);
 
     SingleBrandMinSummaryResponse.MinPriceByCategory mapTo(SingleBrandMinItem item);
+
+    PriceSummaryByCategoryResponse map(PriceSummary summary);
+
+    PriceSummaryByCategoryResponse.PriceSummaryByCategoryDetail map(PriceSummaryItem item);
 }

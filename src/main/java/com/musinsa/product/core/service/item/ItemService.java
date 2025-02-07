@@ -84,4 +84,25 @@ public class ItemService {
 
         return new SingleBrandMinItemSummary(minSummary.getBrand().getName(), minSummary.getTotalPrice(), details);
     }
+
+    @Transactional(readOnly = true)
+    public PriceSummary getPriceSummary(String categoryName) {
+        Category category = categoryRepository.findByName(categoryName);
+
+        List<Item> items = itemRepository.findAllByCategory(category);
+
+        if(items.isEmpty()) throw new RuntimeException("해당하는 카테고리 아이템이 없습니다." + categoryName);
+
+        Item minItem = items.stream().min(Comparator.comparing(Item::getPrice))
+                .orElseThrow(() -> new RuntimeException("최저가 상품을 찾을 수 없습니다"));
+
+        Item maxItem = items.stream().max(Comparator.comparing(Item::getPrice))
+                .orElseThrow(() -> new RuntimeException("최고가 상품을 찾을 수 없습니다"));
+
+        return new PriceSummary(
+                categoryName,
+                List.of(new PriceSummaryItem(minItem.getBrand().getName(), minItem.getPrice())),
+                List.of(new PriceSummaryItem(maxItem.getBrand().getName(), maxItem.getPrice()))
+        );
+    }
 }
