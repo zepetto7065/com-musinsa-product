@@ -5,12 +5,11 @@ import com.musinsa.product.application.persistence.item.ItemRepository;
 import com.musinsa.product.core.domain.Brand;
 import com.musinsa.product.core.domain.Category;
 import com.musinsa.product.core.domain.Item;
-import com.musinsa.product.core.service.item.ItemService;
-import com.musinsa.product.core.service.item.MinItem;
-import com.musinsa.product.core.service.item.MinItemSummary;
-import com.musinsa.product.core.service.item.PriceSummary;
+import com.musinsa.product.core.service.item.ItemSummaryService;
+import com.musinsa.product.core.service.item.summary.MinItem;
+import com.musinsa.product.core.service.item.summary.MinItemSummary;
+import com.musinsa.product.core.service.item.summary.PriceSummary;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,9 +25,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class ItemServiceTest {
+class ItemSummaryServiceTest {
     @InjectMocks
-    private ItemService itemService;
+    private ItemSummaryService itemSummaryService;
     @Mock
     private ItemRepository itemRepository;
     @Mock
@@ -57,7 +56,7 @@ class ItemServiceTest {
         when(itemRepository.findMinPricedProductPerCategory()).thenReturn(minItemList);
 
         //When
-        MinItemSummary minPricePerCategory = itemService.getMinPricePerCategory();
+        MinItemSummary minPricePerCategory = itemSummaryService.getMinPricePerCategory();
 
         //Then
         assertEquals(minPricePerCategory.getTotalPrice(), BigDecimal.valueOf(12000L));
@@ -72,7 +71,7 @@ class ItemServiceTest {
         when(itemRepository.findAll()).thenReturn(Collections.emptyList());
 
         assertThrows(RuntimeException.class, () -> {
-            itemService.getSingleBrandMinSummary();
+            itemSummaryService.getSingleBrandMinSummary();
         });
     }
 
@@ -91,7 +90,7 @@ class ItemServiceTest {
         when(itemRepository.findAllByCategory(category)).thenReturn(List.of(cheapItem, expensiveItem));
 
         // when
-        PriceSummary result = itemService.getPriceSummary("상의");
+        PriceSummary result = itemSummaryService.getPriceSummary("상의");
 
         // then
         assertEquals("상의", result.getCategoryName());
@@ -111,7 +110,7 @@ class ItemServiceTest {
         when(categoryRepository.findByName("하의")).thenThrow(new RuntimeException("해당하는 카테고리를 찾을 수 없습니다: 하의"));
 
         // when & then
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> itemService.getPriceSummary("하의"));
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> itemSummaryService.getPriceSummary("하의"));
         assertTrue(thrown.getMessage().contains("해당하는 카테고리를 찾을 수 없습니다"));
     }
 }

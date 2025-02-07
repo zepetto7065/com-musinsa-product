@@ -1,10 +1,10 @@
 package com.musinsa.product.application.api.item;
 
 import com.musinsa.product.application.api.item.payload.ItemConverter;
-import com.musinsa.product.core.service.item.ItemService;
-import com.musinsa.product.core.service.item.MinItemSummary;
-import com.musinsa.product.core.service.item.PriceSummary;
-import com.musinsa.product.core.service.item.SingleBrandMinItemSummary;
+import com.musinsa.product.core.service.item.ItemSummaryService;
+import com.musinsa.product.core.service.item.summary.MinItemSummary;
+import com.musinsa.product.core.service.item.summary.PriceSummary;
+import com.musinsa.product.core.service.item.summary.SingleBrandMinItemSummary;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,7 +26,7 @@ class ItemSummaryControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ItemService itemService;
+    private ItemSummaryService itemSummaryService;
 
     @MockBean
     private ItemConverter itemConverter;
@@ -37,9 +37,9 @@ class ItemSummaryControllerTest {
                 .totalPrice(BigDecimal.valueOf(2000L))
                 .build();
 
-        when(itemService.getMinPricePerCategory()).thenReturn(mockSummary);
+        when(itemSummaryService.getMinPricePerCategory()).thenReturn(mockSummary);
 
-        mockMvc.perform(get("/items/min-price-summary")
+        mockMvc.perform(get("/item-summary/min-price")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -54,9 +54,9 @@ class ItemSummaryControllerTest {
                 .brandName("D")
                 .build();
 
-        when(itemService.getSingleBrandMinSummary()).thenReturn(summary);
+        when(itemSummaryService.getSingleBrandMinSummary()).thenReturn(summary);
 
-        mockMvc.perform(get("/items/single-brand-summary")
+        mockMvc.perform(get("/item-summary/single-brand")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -72,9 +72,9 @@ class ItemSummaryControllerTest {
                 .categoryName(categoryName)
                 .build();
 
-        when(itemService.getPriceSummary(categoryName)).thenReturn(summary);
+        when(itemSummaryService.getPriceSummary(categoryName)).thenReturn(summary);
 
-        mockMvc.perform(get("/items/price-summary")
+        mockMvc.perform(get("/item-summary/price")
                         .param("categoryName", "상의")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

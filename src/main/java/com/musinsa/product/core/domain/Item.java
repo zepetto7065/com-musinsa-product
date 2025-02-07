@@ -1,5 +1,6 @@
 package com.musinsa.product.core.domain;
 
+import com.musinsa.product.core.service.item.ItemVo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,4 +26,11 @@ public class Item extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
+    public void adjust(ItemVo command, Brand brand, Category category) {
+        this.name = command.getName();
+        this.price = command.getPrice();
+        this.brand = brand;
+        this.category = category;
+    }
 }

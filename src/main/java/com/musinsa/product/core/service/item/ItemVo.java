@@ -7,7 +7,10 @@ import java.math.BigDecimal;
 
 @Value
 @Builder
-public class SingleBrandMinItem {
-    String categoryName;
-    BigDecimal minPrice;
+public class ItemVo {
+    Long itemId;
+    String name;
+    BigDecimal price;
+    Long brandId;
+    Long categoryId;
 }
