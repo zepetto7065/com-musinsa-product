@@ -18,4 +18,10 @@ public class CategoryDao implements CategoryRepository {
         return categoryJpaRepository.findByName(categoryName)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));
     }
+
+    @Override
+    public Category findById(Long categoryId) {
+        return categoryJpaRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리 id 입니다." + categoryId));
+    }
 }

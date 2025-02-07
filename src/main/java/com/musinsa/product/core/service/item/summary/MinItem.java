@@ -1,4 +1,4 @@
-package com.musinsa.product.core.service.item;
+package com.musinsa.product.core.service.item.summary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
