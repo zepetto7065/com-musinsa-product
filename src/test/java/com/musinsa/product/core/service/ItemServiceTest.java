@@ -1,8 +1,13 @@
 package com.musinsa.product.core.service;
 
-import com.jayway.jsonpath.internal.function.numeric.Min;
-import com.musinsa.product.application.persistence.ItemRepository;
+import com.musinsa.product.application.persistence.category.CategoryRepository;
+import com.musinsa.product.application.persistence.item.ItemRepository;
+import com.musinsa.product.core.service.item.ItemService;
+import com.musinsa.product.core.service.item.MinItem;
+import com.musinsa.product.core.service.item.MinItemSummary;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -11,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +27,8 @@ class ItemServiceTest {
     private ItemService itemService;
     @Mock
     private ItemRepository itemRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
 
     @BeforeEach
     void setUp()
@@ -50,5 +58,17 @@ class ItemServiceTest {
         //Then
         assertEquals(minPricePerCategory.getTotalPrice(), BigDecimal.valueOf(12000L));
         assertEquals(minPricePerCategory.getDetailList().size(), 2);
+    }
+
+    @Test
+    @DisplayName("모든 카테고리를 보유한 브랜드가 없을 경우")
+    void getSingleBrandMinSummary_WhenNoBrandHasAllCategories_ShouldThrowException() {
+        when(categoryRepository.count()).thenReturn(8L);
+
+        when(itemRepository.findAll()).thenReturn(Collections.emptyList());
+
+        assertThrows(RuntimeException.class, () -> {
+            itemService.getSingleBrandMinSummary();
+        });
     }
 }
