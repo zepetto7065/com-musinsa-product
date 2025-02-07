@@ -1,5 +1,6 @@
 package com.musinsa.product.application.persistence.item;
 
+import com.musinsa.product.core.domain.Category;
 import com.musinsa.product.core.domain.Item;
 import com.musinsa.product.core.service.item.MinItem;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class ItemDao implements ItemRepository {
     @Override
     public List<Item> findAll() {
         return categoryJpaRepository.findAll();
+    }
+
+    @Override
+    public List<Item> findAllByCategory(Category category) {
+        return categoryJpaRepository.findAllByCategory(category);
     }
 }

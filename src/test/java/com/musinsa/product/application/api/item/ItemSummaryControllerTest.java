@@ -3,6 +3,7 @@ package com.musinsa.product.application.api.item;
 import com.musinsa.product.application.api.item.payload.ItemConverter;
 import com.musinsa.product.core.service.item.ItemService;
 import com.musinsa.product.core.service.item.MinItemSummary;
+import com.musinsa.product.core.service.item.PriceSummary;
 import com.musinsa.product.core.service.item.SingleBrandMinItemSummary;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,24 @@ class ItemSummaryControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.brandName").value("D"))
                 .andExpect(jsonPath("$.totalPrice").value(2000L))
+                .andDo(print());
+    }
+
+    @Test
+    void getPriceSummary() throws Exception {
+        String categoryName = "상의";
+        PriceSummary summary = PriceSummary.builder()
+                .categoryName(categoryName)
+                .build();
+
+        when(itemService.getPriceSummary(categoryName)).thenReturn(summary);
+
+        mockMvc.perform(get("/items/price-summary")
+                        .param("categoryName", "상의")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.categoryName").value(categoryName))
                 .andDo(print());
     }
 }

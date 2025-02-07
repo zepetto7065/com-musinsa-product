@@ -1,5 +1,6 @@
 package com.musinsa.product.application.persistence.item;
 
+import com.musinsa.product.core.domain.Category;
 import com.musinsa.product.core.domain.Item;
 import com.musinsa.product.core.service.item.MinItem;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,5 @@ public interface ItemJpaRepository extends JpaRepository<Item, Long> {
             "ORDER BY i.category.id ASC")
     List<MinItem> findMinPricedProductPerCategory();
 
+    List<Item> findAllByCategory(Category category);
 }
