@@ -16,26 +16,26 @@ java -jar product-0.0.1-SNAPSHOT.jar
 ## 구현 API
 
 ### 1 카테고리 별 최저가격 브랜드와 상품 가격, 총액을 조회하는 API
-GET /item-summary/min-price
+GET /api/item-summary/min-price
 <br>
 ### 2. 단일 브랜드로 모든 카테고리 상품을 구매할때, 최저가격에 판매하는 브랜드와 카테고리의 상품가격, 총액을 조회하는 API
-GET /item-summary/single-brand
+GET /api/item-summary/single-brand
 <br>
 ### 3. 카테고리 이름으로 최저, 최고 가격 브랜드와 상품 가격을 조회하는 API
-GET /item-summary/price
+GET /api/item-summary/price
 
 ### 4 상품 추가/업데이트/삭제 API
 <br>
-POST /items
+POST /api/items
 <br>
-PUT /items
+PUT /api/items
 <br>
-DELETE /items/{itemId}
+DELETE /api/items/{itemId}
 <br>
 
 ### 4 브랜드 추가/업데이트/삭제 API
-POST /brands
+POST /api/brands
 <br>
-PUT /brands/{brandId}
+PUT /api/brands/{brandId}
 <br>
-DELETE /brands/{brandId}
+DELETE /api/brands/{brandId}

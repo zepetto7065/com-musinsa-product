@@ -5,18 +5,19 @@ import com.musinsa.product.application.api.brand.payload.BrandSaveResponse;
 import com.musinsa.product.application.api.brand.payload.SaveBrandRequest;
 import com.musinsa.product.core.domain.Brand;
 import com.musinsa.product.core.service.brand.BrandService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/brands")
+@RequestMapping("/api/brands")
 @RequiredArgsConstructor
 public class BrandController {
     private final BrandService brandService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody SaveBrandRequest command){
+    public ResponseEntity<Void> create(@Valid @RequestBody SaveBrandRequest command){
         brandService.create(command.getName());
         return ResponseEntity.ok().build();
     }

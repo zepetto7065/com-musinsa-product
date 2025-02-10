@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/item-summary")
+@RequestMapping("/api/item-summary")
 public class ItemSummaryController {
 
     private final ItemSummaryService itemSummaryService;
